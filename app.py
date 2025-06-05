@@ -1,47 +1,42 @@
 from random import randint
 
 itens = ('pedra', 'papel', 'tesoura')
-computador = randint(0, 2)
 
-print('''Suas opções:
-      [0] PEDRA
-      [1] PAPEL
-      [2] TESOURA''')
+while True:
+    computador = randint(0, 2)
 
-jogador = int(input('Qual é a sua jogada? '))
+    print('''\nSuas opções:
+    [0] PEDRA
+    [1] PAPEL
+    [2] TESOURA''')
 
-print('-=' * 11)
-print(f'Computador jogou {itens[computador]}')
-print(f'Jogador jogou {itens[jogador]}')
-print('-=' * 11)
+    try:
+        jogador = int(input('Qual é a sua jogada? '))
+    except ValueError:
+        print('Entrada inválida! Digite um número entre 0 e 2.')
+        continue
 
-# Condições do jogo
-if computador == 0:  # Computador jogou PEDRA
-    if jogador == 0:
-        print('EMPATE')
-    elif jogador == 1:
-        print('JOGADOR VENCE')
-    elif jogador == 2:
-        print('COMPUTADOR VENCE')
-    else:
+    if jogador not in [0, 1, 2]:
         print('JOGADA INVÁLIDA!')
+        continue
 
-elif computador == 1:  # Computador jogou PAPEL
-    if jogador == 0:
-        print('COMPUTADOR VENCE')
-    elif jogador == 1:
+    print('-=' * 11)
+    print(f'Computador jogou {itens[computador]}')
+    print(f'Jogador jogou {itens[jogador]}')
+    print('-=' * 11)
+
+    # Condições do jogo
+    if computador == jogador:
         print('EMPATE')
-    elif jogador == 2:
+    elif (computador == 0 and jogador == 1) or \
+         (computador == 1 and jogador == 2) or \
+         (computador == 2 and jogador == 0):
         print('JOGADOR VENCE')
     else:
-        print('JOGADA INVÁLIDA!')
-
-elif computador == 2:  # Computador jogou TESOURA
-    if jogador == 0:
-        print('JOGADOR VENCE')
-    elif jogador == 1:
         print('COMPUTADOR VENCE')
-    elif jogador == 2:
-        print('EMPATE')
-    else:
-        print('JOGADA INVÁLIDA!')
+
+    # Pergunta para continuar
+    resposta = input('\nDeseja jogar novamente? (s/n): ').strip().lower()
+    if resposta != 's':
+        print('Obrigado por jogar! Até a próxima.')
+        break
